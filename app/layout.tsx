@@ -16,7 +16,11 @@ export const metadata: Metadata = {
   title: "Opus Hub - Transforme sua operação em AI First",
   description: "Ecossistema inteligente que escala comercial e atendimento 24/7. Não é chatbot, é um time de IA especializado.",
   icons: {
-    icon: "/favicon.png",
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
   },
 };
 
