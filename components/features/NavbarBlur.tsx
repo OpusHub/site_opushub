@@ -16,6 +16,10 @@ export function NavbarBlur() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    const scrollToForm = () => {
+        document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+    };
+
     return (
         <nav
             className={cn(
@@ -46,7 +50,7 @@ export function NavbarBlur() {
 
                 <div className="hidden md:block"></div>
 
-                <GlowButton size="sm" className="hidden md:inline-flex">
+                <GlowButton size="sm" className="hidden md:inline-flex" onClick={scrollToForm}>
                     AGENDAR DEMONSTRAÇÃO
                 </GlowButton>
             </div>
