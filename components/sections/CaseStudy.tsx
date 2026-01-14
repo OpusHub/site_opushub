@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { GlowButton } from "../features/GlowButton";
-import { ArrowUpRight, Play } from "lucide-react";
+import { YouTubeFacade } from "../features/YouTubeFacade";
+import { ArrowUpRight } from "lucide-react";
 
 const numbers = [
     { value: "R$ 44K", label: "Economizados/mês em salários" },
@@ -40,13 +41,7 @@ export function CaseStudy() {
                     >
                         <div className="absolute -inset-4 bg-primary/10 blur-2xl rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         <div className="relative h-full w-full rounded-3xl border border-white/10 overflow-hidden bg-zinc-900 shadow-2xl">
-                            <iframe
-                                src="https://www.youtube.com/embed/5BPqC8wD8f4?autoplay=0&rel=0"
-                                title="Belevita Case Study"
-                                className="w-full h-full"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                            />
+                            <YouTubeFacade videoId="5BPqC8wD8f4" title="Belevita Case Study" />
                         </div>
                     </motion.div>
 
