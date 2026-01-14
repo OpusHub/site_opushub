@@ -34,7 +34,7 @@ export function Hero() {
 
                     {/* Subheadline */}
                     <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl leading-relaxed mx-auto font-light">
-                        Transforme sua operação em uma <strong className="text-white font-medium">empresa AI First</strong>: ecossistema inteligente que escala comercial e atendimento 24/7, enquanto gera dados que revelam exatamente onde você perde vendas.
+                        Transforme sua operação em uma <strong className="text-white font-medium">empresa AI First</strong>: ecossistema inteligente que escala o seu comercial e atendimento, enquanto gera dados que revelam exatamente onde você perde dinheiro.
                     </p>
 
                     {/* CTA - Using global GlowButton now */}

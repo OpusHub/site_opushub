@@ -12,7 +12,7 @@ const problems = [
     {
         emoji: "😵‍💫",
         title: "Equipe sobrecarregada não resolve o caos",
-        description: "Contratar mais gente custa R$ 3-5k/mês por pessoa, mas mensagens continuam perdidas e informações desencontradas. Você infla custo sem cortar o problema na raiz."
+        description: "Contratar mais gente custa em média R$3-5k/mês por profissional, mas os atendimentos continuam lentos e as informações desencontradas. Você infla custo sem cortar o problema na raiz."
     },
     {
         emoji: "📉",
