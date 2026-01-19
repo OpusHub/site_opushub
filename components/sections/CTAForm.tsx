@@ -30,49 +30,6 @@ export function CTAForm() {
         setWhatsapp(formatWhatsApp(e.target.value));
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setStatus("submitting");
-
-        const formData = new FormData(e.currentTarget);
-        const data = {
-            name: formData.get("name"),
-            whatsapp: whatsapp,
-            email: formData.get("email"),
-            company: formData.get("company"),
-            market: market,
-            other_market: formData.get("other_market") || "",
-            revenue: revenue,
-            leads: leads,
-            _subject: `🚀 Novo Lead Opus Hub: ${formData.get("name")}`,
-            _template: "table",
-            _captcha: "false"
-        };
-
-        try {
-            // Sending directly from client to avoid server-side blocking and ensure activation email works
-            const response = await fetch("https://formsubmit.co/ajax/victor@opusbr.com", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify(data),
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-                setStatus("success");
-            } else {
-                console.error("Form error:", result);
-                setStatus("error");
-            }
-        } catch (error) {
-            console.error("Form submission error:", error);
-            setStatus("error");
-        }
-    };
 
     const dropdownOptions = {
         market: [
@@ -162,7 +119,17 @@ export function CTAForm() {
                             <button onClick={() => setStatus("idle")} className="text-primary hover:underline">Tentar novamente</button>
                         </div>
                     ) : (
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                        <form
+                            action="https://formsubmit.co/victor@opusbr.com"
+                            method="POST"
+                            className="space-y-6"
+                        >
+                            {/* Hidden Fields for configuration */}
+                            <input type="hidden" name="_subject" value="🚀 Novo Lead Opus Hub!" />
+                            <input type="hidden" name="_captcha" value="false" />
+                            <input type="hidden" name="_template" value="table" />
+                            <input type="hidden" name="_next" value="https://www.opusbr.com/#contact" />
+
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="name" className="text-white ml-1">Nome completo</Label>
@@ -192,6 +159,11 @@ export function CTAForm() {
                                     <Input id="company" name="company" placeholder="Nome da empresa" required className="bg-white/[0.03] border-white/10 h-12" />
                                 </div>
                             </div>
+
+                            {/* Hidden inputs to capture state values that might not send if using custom select components without hidden fields using native names */}
+                            <input type="hidden" name="market" value={market} />
+                            <input type="hidden" name="revenue" value={revenue} />
+                            <input type="hidden" name="leads" value={leads} />
 
                             <div className="space-y-2">
                                 <Label className="text-white ml-1">Qual mercado você trabalha atualmente?</Label>
@@ -243,8 +215,8 @@ export function CTAForm() {
                             </div>
 
                             <div className="pt-4">
-                                <GlowButton className="w-full py-7 text-lg font-bold uppercase tracking-widest" disabled={status === "submitting"}>
-                                    {status === "submitting" ? "Enviando..." : "AGENDAR DEMONSTRAÇÃO"}
+                                <GlowButton className="w-full py-7 text-lg font-bold uppercase tracking-widest">
+                                    AGENDAR DEMONSTRAÇÃO
                                 </GlowButton>
                             </div>
 
