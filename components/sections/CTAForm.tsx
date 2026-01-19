@@ -13,9 +13,11 @@ import {
 import { useState } from "react";
 
 export function CTAForm() {
-    const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+    const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
     const [whatsapp, setWhatsapp] = useState("");
     const [market, setMarket] = useState("");
+    const [revenue, setRevenue] = useState("");
+    const [leads, setLeads] = useState("");
 
     const formatWhatsApp = (value: string) => {
         const numbers = value.replace(/\D/g, "").slice(0, 11);
@@ -28,11 +30,39 @@ export function CTAForm() {
         setWhatsapp(formatWhatsApp(e.target.value));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setStatus("submitting");
-        setTimeout(() => setStatus("success"), 1500);
-    }
+
+        const formData = new FormData(e.currentTarget);
+        const data = {
+            name: formData.get("name"),
+            whatsapp: whatsapp,
+            email: formData.get("email"),
+            company: formData.get("company"),
+            market: market,
+            other_market: formData.get("other_market") || "",
+            revenue: revenue,
+            leads: leads,
+        };
+
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                setStatus("success");
+            } else {
+                setStatus("error");
+            }
+        } catch (error) {
+            console.error("Form submission error:", error);
+            setStatus("error");
+        }
+    };
 
     const dropdownOptions = {
         market: [
@@ -114,17 +144,25 @@ export function CTAForm() {
                             <h3 className="text-3xl font-bold text-white mb-2">Solicitação Recebida!</h3>
                             <p className="text-muted-foreground max-w-xs mx-auto">Nossos fundadores entrarão em contato via WhatsApp em breve para o agendamento.</p>
                         </div>
+                    ) : status === "error" ? (
+                        <div className="text-center py-20 animate-in fade-in zoom-in duration-500">
+                            <div className="text-6xl mb-6 w-24 h-24 rounded-full bg-red-500/10 flex items-center justify-center mx-auto border border-red-500/20">❌</div>
+                            <h3 className="text-3xl font-bold text-white mb-2">Ops! Algo deu errado</h3>
+                            <p className="text-muted-foreground max-w-xs mx-auto mb-4">Tente novamente ou entre em contato pelo WhatsApp.</p>
+                            <button onClick={() => setStatus("idle")} className="text-primary hover:underline">Tentar novamente</button>
+                        </div>
                     ) : (
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="name" className="text-white ml-1">Nome completo</Label>
-                                    <Input id="name" placeholder="Seu nome" required className="bg-white/[0.03] border-white/10 h-12" />
+                                    <Input id="name" name="name" placeholder="Seu nome" required className="bg-white/[0.03] border-white/10 h-12" />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="whatsapp" className="text-white ml-1">WhatsApp</Label>
                                     <Input
                                         id="whatsapp"
+                                        name="whatsapp"
                                         value={whatsapp}
                                         onChange={handleWhatsAppChange}
                                         placeholder="(XX) XXXXX-XXXX"
@@ -137,11 +175,11 @@ export function CTAForm() {
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="email" className="text-white ml-1">E-mail Corporativo</Label>
-                                    <Input id="email" type="email" placeholder="voce@empresa.com" required className="bg-white/[0.03] border-white/10 h-12" />
+                                    <Input id="email" name="email" type="email" placeholder="voce@empresa.com" required className="bg-white/[0.03] border-white/10 h-12" />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="company" className="text-white ml-1">Empresa</Label>
-                                    <Input id="company" placeholder="Nome da empresa" required className="bg-white/[0.03] border-white/10 h-12" />
+                                    <Input id="company" name="company" placeholder="Nome da empresa" required className="bg-white/[0.03] border-white/10 h-12" />
                                 </div>
                             </div>
 
@@ -153,28 +191,28 @@ export function CTAForm() {
                                     </SelectTrigger>
                                     <SelectContent className="bg-zinc-900 border-white/10 text-white">
                                         {dropdownOptions.market.map(opt => (
-                                            <SelectItem key={opt} value={opt.toLowerCase()}>{opt}</SelectItem>
+                                            <SelectItem key={opt} value={opt}>{opt}</SelectItem>
                                         ))}
                                     </SelectContent>
                                 </Select>
                             </div>
 
-                            {market === "outro" && (
+                            {market === "Outro" && (
                                 <div className="space-y-2 transition-all animate-in slide-in-from-top-2 duration-300">
                                     <Label htmlFor="other_market" className="text-white ml-1">Especifique o seu mercado</Label>
-                                    <Input id="other_market" placeholder="Descreva seu nicho..." required className="bg-white/[0.03] border-white/10 h-12" />
+                                    <Input id="other_market" name="other_market" placeholder="Descreva seu nicho..." required className="bg-white/[0.03] border-white/10 h-12" />
                                 </div>
                             )}
 
                             <div className="space-y-2">
                                 <Label className="text-white ml-1">Faixa de Faturamento Mensal</Label>
-                                <Select required>
+                                <Select onValueChange={setRevenue} required>
                                     <SelectTrigger className="bg-white/[0.03] border-white/10 h-12">
                                         <SelectValue placeholder="Selecione o faturamento..." />
                                     </SelectTrigger>
                                     <SelectContent className="bg-zinc-900 border-white/10">
                                         {dropdownOptions.revenue.map(opt => (
-                                            <SelectItem key={opt} value={opt.toLowerCase().replace(/[^a-z0-9]/g, "-")}>{opt}</SelectItem>
+                                            <SelectItem key={opt} value={opt}>{opt}</SelectItem>
                                         ))}
                                     </SelectContent>
                                 </Select>
@@ -182,13 +220,13 @@ export function CTAForm() {
 
                             <div className="space-y-2">
                                 <Label className="text-white ml-1">Volume de Atendimentos/Leads por mês</Label>
-                                <Select required>
+                                <Select onValueChange={setLeads} required>
                                     <SelectTrigger className="bg-white/[0.03] border-white/10 h-12">
                                         <SelectValue placeholder="Selecione o volume..." />
                                     </SelectTrigger>
                                     <SelectContent className="bg-zinc-900 border-white/10">
                                         {dropdownOptions.leads.map(opt => (
-                                            <SelectItem key={opt} value={opt.toLowerCase().replace(/[^a-z0-9]/g, "-")}>{opt}</SelectItem>
+                                            <SelectItem key={opt} value={opt}>{opt}</SelectItem>
                                         ))}
                                     </SelectContent>
                                 </Select>
@@ -196,7 +234,7 @@ export function CTAForm() {
 
                             <div className="pt-4">
                                 <GlowButton className="w-full py-7 text-lg font-bold uppercase tracking-widest" disabled={status === "submitting"}>
-                                    {status === "submitting" ? "Solicitando..." : "AGENDAR DEMONSTRAÇÃO"}
+                                    {status === "submitting" ? "Enviando..." : "AGENDAR DEMONSTRAÇÃO"}
                                 </GlowButton>
                             </div>
 
