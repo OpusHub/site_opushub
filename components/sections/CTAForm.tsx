@@ -31,6 +31,49 @@ export function CTAForm() {
     };
 
 
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setStatus("submitting");
+
+        const formData = new FormData(e.currentTarget);
+        const formElement = e.currentTarget;
+
+        // Prepare data for AJAX
+        const data = Object.fromEntries(formData.entries());
+
+        // Add config fields explicitly if they aren't in the form data
+        const payload = {
+            ...data,
+            _subject: `🚀 Novo Lead Opus Hub: ${formData.get("name")}`,
+            _template: "table",
+            _captcha: "false"
+        };
+
+        try {
+            // Attempt AJAX submission for better UX
+            const response = await fetch("https://formsubmit.co/ajax/victor@opusbr.com", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (response.ok) {
+                setStatus("success");
+            } else {
+                // If AJAX fails (e.g. rate limit, captcha required), fallback to native submit
+                console.log("AJAX failed, falling back to native submission");
+                formElement.submit();
+            }
+        } catch (error) {
+            console.error("Submission error, falling back to native:", error);
+            // Network error validation, fallback to native
+            formElement.submit();
+        }
+    };
+
     const dropdownOptions = {
         market: [
             "Serviços", "Ecommerce", "Consultoria", "Infoprodutos", "Mentoria", "SaaS", "Outro"
@@ -106,22 +149,29 @@ export function CTAForm() {
                     <div className="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
                     {status === "success" ? (
-                        <div className="text-center py-20 animate-in fade-in zoom-in duration-500">
-                            <div className="text-6xl mb-6 shadow-[0_0_30px_rgba(0,242,254,0.3)] w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mx-auto border border-primary/20">✅</div>
-                            <h3 className="text-3xl font-bold text-white mb-2">Solicitação Recebida!</h3>
-                            <p className="text-muted-foreground max-w-xs mx-auto">Nossos fundadores entrarão em contato via WhatsApp em breve para o agendamento.</p>
+                        <div className="text-center py-20 animate-in fade-in zoom-in duration-500 h-full flex flex-col items-center justify-center min-h-[500px]">
+                            <div className="text-6xl mb-8 shadow-[0_0_30px_rgba(0,242,254,0.3)] w-28 h-28 rounded-full bg-primary/10 flex items-center justify-center mx-auto border border-primary/20">✅</div>
+                            <h3 className="text-4xl font-bold text-white mb-4">Solicitação Enviada!</h3>
+                            <p className="text-lg text-muted-foreground max-w-sm mx-auto leading-relaxed">
+                                Recebemos suas informações com sucesso. <br />
+                                <span className="text-white">Nossos fundadores entrarão em contato via WhatsApp em breve.</span>
+                            </p>
+                            <GlowButton className="mt-8" onClick={() => setStatus("idle")}>
+                                Enviar outra resposta
+                            </GlowButton>
                         </div>
                     ) : status === "error" ? (
-                        <div className="text-center py-20 animate-in fade-in zoom-in duration-500">
+                        <div className="text-center py-20 animate-in fade-in zoom-in duration-500 h-full flex flex-col items-center justify-center min-h-[500px]">
                             <div className="text-6xl mb-6 w-24 h-24 rounded-full bg-red-500/10 flex items-center justify-center mx-auto border border-red-500/20">❌</div>
                             <h3 className="text-3xl font-bold text-white mb-2">Ops! Algo deu errado</h3>
-                            <p className="text-muted-foreground max-w-xs mx-auto mb-4">Tente novamente ou entre em contato pelo WhatsApp.</p>
-                            <button onClick={() => setStatus("idle")} className="text-primary hover:underline">Tentar novamente</button>
+                            <p className="text-muted-foreground max-w-xs mx-auto mb-4">Houve um erro no envio. Por favor, tente novamente.</p>
+                            <button onClick={() => setStatus("idle")} className="text-primary hover:underline font-bold">Tentar novamente</button>
                         </div>
                     ) : (
                         <form
                             action="https://formsubmit.co/victor@opusbr.com"
                             method="POST"
+                            onSubmit={handleSubmit}
                             className="space-y-6"
                         >
                             {/* Hidden Fields for configuration */}
@@ -215,8 +265,8 @@ export function CTAForm() {
                             </div>
 
                             <div className="pt-4">
-                                <GlowButton className="w-full py-7 text-lg font-bold uppercase tracking-widest">
-                                    AGENDAR DEMONSTRAÇÃO
+                                <GlowButton className="w-full py-7 text-lg font-bold uppercase tracking-widest" disabled={status === "submitting"}>
+                                    {status === "submitting" ? "Enviando..." : "AGENDAR DEMONSTRAÇÃO"}
                                 </GlowButton>
                             </div>
 
