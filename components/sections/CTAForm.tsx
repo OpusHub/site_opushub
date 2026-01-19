@@ -44,18 +44,28 @@ export function CTAForm() {
             other_market: formData.get("other_market") || "",
             revenue: revenue,
             leads: leads,
+            _subject: `🚀 Novo Lead Opus Hub: ${formData.get("name")}`,
+            _template: "table",
+            _captcha: "false"
         };
 
         try {
-            const response = await fetch("/api/contact", {
+            // Sending directly from client to avoid server-side blocking and ensure activation email works
+            const response = await fetch("https://formsubmit.co/ajax/victor@opusbr.com", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
                 body: JSON.stringify(data),
             });
+
+            const result = await response.json();
 
             if (response.ok) {
                 setStatus("success");
             } else {
+                console.error("Form error:", result);
                 setStatus("error");
             }
         } catch (error) {
