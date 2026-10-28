@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { Twitter, Linkedin, Instagram } from "lucide-react";
+import { company } from "@/lib/company";
 
 export function Footer() {
     return (
@@ -12,6 +14,9 @@ export function Footer() {
                         <h3 className="text-2xl font-bold font-heading text-white mb-2">Opus Hub</h3>
                         <p className="text-muted-foreground text-sm">
                             &copy; {new Date().getFullYear()} Opus Hub. Todos os direitos reservados.
+                        </p>
+                        <p className="text-muted-foreground text-sm mt-1">
+                            {company.legalName} &middot; CNPJ {company.cnpj}
                         </p>
                     </div>
 
@@ -25,8 +30,8 @@ export function Footer() {
                     </div>
 
                     <div className="flex gap-8 text-sm text-muted-foreground">
-                        <a href="#" className="hover:text-white transition-colors">Termos de Uso</a>
-                        <a href="#" className="hover:text-white transition-colors">Privacidade</a>
+                        <Link href="/termos-de-uso" className="hover:text-white transition-colors">Termos de Uso</Link>
+                        <Link href="/politica-de-privacidade" className="hover:text-white transition-colors">Política de Privacidade</Link>
                     </div>
 
                 </div>
