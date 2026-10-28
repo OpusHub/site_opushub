@@ -119,8 +119,10 @@ export default function TermosDeUsoPage() {
                 <p>Em qualquer um dos dois tipos:</p>
                 <ul>
                     <li>
-                        o site não recebe nem guarda os dados do seu cartão. Eles são informados diretamente no
-                        ambiente de pagamento da empresa que processa a cobrança;
+                        a cobrança é feita por um gateway de pagamento de terceiros, e os dados do seu cartão são
+                        informados diretamente no ambiente dele. A {company.tradeName} não tem acesso aos dados do
+                        seu cartão. O gateway nos informa o resultado da cobrança (por exemplo, aprovada ou
+                        recusada);
                     </li>
                     <li>
                         se uma cobrança for recusada pela administradora do cartão, entraremos em contato para
@@ -156,8 +158,8 @@ export default function TermosDeUsoPage() {
                 <ul>
                     <li>devolvemos o valor total que você pagou, sem descontos e sem taxas;</li>
                     <li>
-                        a devolução é feita pelo mesmo meio de pagamento. No cartão de crédito, pedimos o estorno à
-                        administradora imediatamente depois de confirmar a desistência. O valor pode aparecer na fatura
+                        a devolução é feita pelo mesmo meio de pagamento. No cartão de crédito, solicitamos o estorno ao
+                        gateway de pagamento imediatamente depois de confirmar a desistência. O valor pode aparecer na fatura
                         atual ou em até duas faturas seguintes, conforme o prazo da administradora do cartão;
                     </li>
                     <li>na cobrança recorrente, a desistência dentro do prazo também cancela as cobranças futuras.</li>

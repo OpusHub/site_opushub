@@ -51,8 +51,9 @@ export default function PoliticaDePrivacidadePage() {
                         documentos fiscais.
                     </li>
                     <li>
-                        <strong>Dados de pagamento:</strong> o site não recebe nem guarda dados de cartão de crédito.
-                        Eles são informados diretamente no ambiente de pagamento da empresa que processa a cobrança.
+                        <strong>Dados de pagamento:</strong> a cobrança é feita por um gateway de pagamento de
+                        terceiros. A {company.tradeName} não tem acesso aos dados do seu cartão, que são tratados pelo
+                        gateway conforme a política de privacidade dele.
                     </li>
                 </ul>
                 <p>
@@ -120,8 +121,9 @@ export default function PoliticaDePrivacidadePage() {
                         conforme a política de privacidade dele.
                     </li>
                     <li>
-                        <strong>Empresa de pagamento:</strong> se você contratar e pagar com cartão, a empresa que
-                        processa o pagamento recebe os dados necessários para fazer a cobrança.
+                        <strong>Gateway de pagamento:</strong> empresa de terceiros que processa a cobrança no cartão
+                        de crédito. Se você contratar e pagar com cartão, ela recebe os dados necessários para fazer a
+                        cobrança e passa a tratá-los conforme a política de privacidade dela.
                     </li>
                     <li>
                         <strong>Autoridades públicas:</strong> quando a lei ou uma decisão judicial exigir.
