@@ -30,8 +30,9 @@ export default function TermosDeUsoPage() {
                         (<a href="#quem-somos" className="text-primary underline underline-offset-4">seção&nbsp;1</a>).
                     </li>
                     <li>
-                        <strong className="text-white">Tipo de cobrança:</strong> única (plano anual) ou recorrente
-                        (plano mensal), conforme a proposta que você aceitar (
+                        <strong className="text-white">Tipo de cobrança:</strong> única (plano anual, contrato de 12
+                        meses) ou recorrente (plano mensal, que você pode cancelar a qualquer momento), conforme a
+                        proposta que você aceitar (
                         <a href="#cobranca" className="text-primary underline underline-offset-4">seção&nbsp;5</a>).
                     </li>
                     <li>
@@ -99,7 +100,7 @@ export default function TermosDeUsoPage() {
                 <div className="grid gap-4 md:grid-cols-2">
                     <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 space-y-2">
                         <p className="text-sm font-bold uppercase tracking-widest text-primary">Cobrança única</p>
-                        <p className="text-white font-semibold">Plano anual</p>
+                        <p className="text-white font-semibold">Plano anual (contrato de 12 meses)</p>
                         <p className="text-sm leading-relaxed">
                             O valor correspondente aos 12 meses do contrato é cobrado de uma só vez. Não há outras
                             cobranças automáticas durante o período contratado.
@@ -107,11 +108,11 @@ export default function TermosDeUsoPage() {
                     </div>
                     <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 space-y-2">
                         <p className="text-sm font-bold uppercase tracking-widest text-primary">Cobrança recorrente</p>
-                        <p className="text-white font-semibold">Plano mensal</p>
+                        <p className="text-white font-semibold">Plano mensal (cancelamento a qualquer momento)</p>
                         <p className="text-sm leading-relaxed">
                             O valor é cobrado todo mês, de forma automática, no cartão de crédito informado por você. Ao
-                            aceitar a proposta, você autoriza essas cobranças mensais, que continuam até o fim do
-                            contrato ou até o cancelamento, nos termos deste documento e do contrato.
+                            aceitar a proposta, você autoriza essas cobranças mensais, que continuam todo mês até você
+                            pedir o cancelamento. Você pode cancelar a qualquer momento.
                         </p>
                     </div>
                 </div>
@@ -129,14 +130,15 @@ export default function TermosDeUsoPage() {
                         regularizar o pagamento. As consequências de um atraso estão previstas no contrato;
                     </li>
                     <li>
-                        para pedir o cancelamento de uma cobrança recorrente, escreva para {email}. Depois da
-                        confirmação do cancelamento, e respeitadas as condições do contrato, não haverá novas
-                        cobranças;
-                    </li>
-                    <li>
                         nos primeiros 7 dias você pode desistir e receber tudo de volta (veja a seção&nbsp;6).
                     </li>
                 </ul>
+
+                <p>
+                    <strong>Como cancelar o plano mensal:</strong> você pode cancelar a qualquer momento, escrevendo
+                    para {email}. Depois que confirmarmos o cancelamento, não haverá novas cobranças. O plano anual
+                    segue as condições do contrato de 12 meses.
+                </p>
             </LegalSection>
 
             <LegalSection id="arrependimento" title="6. Direito de arrependimento e reembolso (7 dias)">
@@ -166,8 +168,9 @@ export default function TermosDeUsoPage() {
                 </ul>
 
                 <p>
-                    Passados os 7 dias, o cancelamento segue as condições previstas no contrato. Esta política não
-                    reduz outros direitos que a lei garante a você.
+                    Passados os 7 dias, o plano mensal pode ser cancelado a qualquer momento (veja a seção&nbsp;5) e o
+                    cancelamento do plano anual segue as condições previstas no contrato. Esta política não reduz
+                    outros direitos que a lei garante a você.
                 </p>
             </LegalSection>
 
