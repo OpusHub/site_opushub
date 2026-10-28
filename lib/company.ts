@@ -5,7 +5,7 @@ export const company = {
     tradeName: "Opus Hub",
     cnpj: "61.261.446/0001-64",
     address: "Alameda Rio Negro, 503, Sala 2020, Alphaville, Barueri/SP, CEP 06454-000",
-    contactEmail: "victor@opusbr.com",
+    contactEmail: "opushub.br@gmail.com",
     siteHost: "www.opusbr.com",
 } as const;
 
